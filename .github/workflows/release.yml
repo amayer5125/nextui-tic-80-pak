@@ -1,0 +1,30 @@
+name: Release TIC-80 Pak
+on:
+  push:
+    tags:
+      - "*.*.*"
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    container: ghcr.io/loveretro/tg5040-toolchain:main
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install dependencies
+        run: apt-get update && apt-get install -y cmake make zip
+      - name: Build
+        run: |
+          git clone --recursive https://github.com/nesbox/TIC-80 && cd TIC-80
+          cmake -B build -DBUILD_LIBRETRO=ON -DBUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_PLAYER=OFF -DBUILD_SDL=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_WITH_FENNEL=ON -DBUILD_WITH_JANET=ON -DBUILD_WITH_JS=ON -DBUILD_WITH_MOON=ON -DBUILD_WITH_PYTHON=ON -DBUILD_WITH_SCHEME=ON -DBUILD_WITH_SQUIRREL=ON -DBUILD_WITH_WASM=ON -DBUILD_WITH_WREN=ON
+          cmake --build build --parallel
+          aarch64-nextui-linux-gnu-strip build/bin/tic80_libretro.so
+          cd ..
+          cp TIC-80/build/bin/tic80_libretro.so .
+          zip TIC.pak.zip default.cfg launch.sh tic80_libretro.so
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: TIC.pak.zip

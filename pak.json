@@ -1,0 +1,15 @@
+{
+  "name": "TIC",
+  "version": "0.1.0",
+  "type": "EMU",
+  "description": "Runs TIC-80 fantasy computer games",
+  "author": "Alex Mayer",
+  "repo_url": "https://github.com/amayer5125/nextui-tic-80-pak",
+  "release_filename": "TIC.pak.zip",
+  "changelog": {
+    "0.1.0": "Initial Pak"
+  },
+  "platforms": [
+    "tg5040"
+  ]
+}
