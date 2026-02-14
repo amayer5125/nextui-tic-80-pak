@@ -1,8 +1,10 @@
 name: Release TIC-80 Pak
 on:
   push:
+    branches:
+      - '**'
     tags:
-      - "*.*.*"
+      - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
   build:
     runs-on: ubuntu-24.04-arm
@@ -13,15 +15,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Install dependencies
-        run: apt-get update && apt-get install -y cmake make zip
+        run: apt-get update && apt-get install -y cmake doxygen graphviz make zip
       - name: Build
         run: |
-          git clone --recursive https://github.com/nesbox/TIC-80 && cd TIC-80
-          cmake -B build -DBUILD_LIBRETRO=ON -DBUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_PLAYER=OFF -DBUILD_SDL=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_WITH_FENNEL=ON -DBUILD_WITH_JANET=ON -DBUILD_WITH_JS=ON -DBUILD_WITH_MOON=ON -DBUILD_WITH_PYTHON=ON -DBUILD_WITH_SCHEME=ON -DBUILD_WITH_SQUIRREL=ON -DBUILD_WITH_WASM=ON -DBUILD_WITH_WREN=ON
+          git clone --branch v1.1.2837 --single-branch --recursive https://github.com/nesbox/TIC-80
+          cd TIC-80
+          # remove curl dependency... I'm not sure why it is required for libretro
+          sed -i '92a set(USE_NAETT FALSE)' CMakeLists.txt
+          cmake -B build -DBUILD_LIBRETRO=ON -DBUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_PLAYER=OFF -DBUILD_SDL=OFF -DBUILD_DEMO_CARTS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_WITH_FENNEL=ON -DBUILD_WITH_JANET=ON -DBUILD_WITH_JS=ON -DBUILD_WITH_MOON=ON -DBUILD_WITH_PYTHON=ON -DBUILD_WITH_SCHEME=ON -DBUILD_WITH_SQUIRREL=ON -DBUILD_WITH_WASM=ON -DBUILD_WITH_WREN=ON -DBUILD_SDLGPU=OFF -DBUILD_SOKOL=OFF -DBUILD_TOUCH_INPUT=OFF -DBUILD_STUB=OFF
           cmake --build build --parallel
-          aarch64-nextui-linux-gnu-strip build/bin/tic80_libretro.so
+          aarch64-nextui-linux-gnu-strip build/lib/tic80_libretro.so
           cd ..
-          cp TIC-80/build/bin/tic80_libretro.so .
+          cp TIC-80/build/lib/tic80_libretro.so .
           zip TIC.pak.zip default.cfg launch.sh tic80_libretro.so
       - name: Release
         uses: softprops/action-gh-release@v2
