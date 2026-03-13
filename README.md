@@ -8,7 +8,7 @@ A [TIC-80](https://tic80.com/) [Libretro](https://www.libretro.com/) core for us
 1. Extract the zip file onto your SD card in the `/Emus/tg5040` directory. You should see a new TIC.pak directory after extracting.
 1. Create the `/Roms/TIC-80 (TIC)` directory on your SD card for your games.
 
-You can download most games for free from the [TIC-80 website](https://tic80.com/play) or the [itch.io website](https://itch.io/games/tag-tic-80). Place the .tic files in the `/Roms/TIC-80 (TIC)` directory.
+You can download most games for free from the [TIC-80 website](https://tic80.com/play) or the [itch.io website](https://itch.io/games/made-with-tic-80). Place the .tic files in the `/Roms/TIC-80 (TIC)` directory.
 
 ## Supported Languages
 
