@@ -17,6 +17,7 @@ See [TIC-80 Supported Languages](https://github.com/nesbox/TIC-80/wiki/supported
 The following languages are complied into the Libretro core.
 
 - Fennel
+- Forth
 - Janet
 - Javascript
 - Lua
@@ -26,9 +27,11 @@ The following languages are complied into the Libretro core.
 - Squirrel
 - WASM (complied languages)
 - Wren
+- YueScript
 
 The following languages **are not** compiled into the Libretro core. They may be included in the future, but for now I can not get them to build.
 
+- MiniScript
 - Ruby
 
 ## Debug Logs
