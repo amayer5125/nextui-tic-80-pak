@@ -21,21 +21,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Clone TIC-80
-        run: git clone --branch v1.1.2837 --single-branch --recursive https://github.com/nesbox/TIC-80
+        run: git clone --branch v1.2.0 --single-branch --recursive https://github.com/nesbox/TIC-80
       - name: Build
         working-directory: ./TIC-80
         run: |
-          # remove curl dependency... I'm not sure why it is required for libretro
-          sed -i '92a set(USE_NAETT FALSE)' CMakeLists.txt
-          cmake -B build -DBUILD_LIBRETRO=ON -DBUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_PLAYER=OFF -DBUILD_SDL=OFF -DBUILD_DEMO_CARTS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_WITH_FENNEL=ON -DBUILD_WITH_JANET=ON -DBUILD_WITH_JS=ON -DBUILD_WITH_MOON=ON -DBUILD_WITH_PYTHON=ON -DBUILD_WITH_SCHEME=ON -DBUILD_WITH_SQUIRREL=ON -DBUILD_WITH_WASM=ON -DBUILD_WITH_WREN=ON -DBUILD_SDLGPU=OFF -DBUILD_SOKOL=OFF -DBUILD_TOUCH_INPUT=OFF -DBUILD_STUB=OFF
+          cmake -B build -DBUILD_LIBRETRO=ON -DBUILD_STATIC=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_PLAYER=OFF -DBUILD_SDL=OFF -DBUILD_WITH_ALL=ON -DBUILD_WITH_RUBY=OFF
           cmake --build build --parallel
-          aarch64-nextui-linux-gnu-strip --strip-unneeded build/lib/tic80_libretro.so
+          aarch64-nextui-linux-gnu-strip --strip-unneeded build/bin/tic80_libretro.so
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         if: github.ref_type == 'tag'
         with:
           name: artifact-${{ matrix.target }}
-          path: TIC-80/build/lib/tic80_libretro.so
+          path: TIC-80/build/bin/tic80_libretro.so
   release:
     name: Release
     needs: build

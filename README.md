@@ -26,6 +26,7 @@ The following languages are complied into the Libretro core.
 - Squirrel
 - WASM (complied languages)
 - Wren
+- Yue
 
 The following languages **are not** compiled into the Libretro core. They may be included in the future, but for now I can not get them to build.
 
