@@ -13,7 +13,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: apt-get update && apt-get install -y cmake doxygen graphviz make zip
       - name: Build
@@ -29,7 +29,7 @@ jobs:
           cp TIC-80/build/lib/tic80_libretro.so .
           zip TIC.pak.zip default.cfg launch.sh tic80_libretro.so
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         if: github.ref_type == 'tag'
         with:
           files: TIC.pak.zip
