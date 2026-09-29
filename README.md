@@ -4,8 +4,8 @@ A [TIC-80](https://tic80.com/) [Libretro](https://www.libretro.com/) core for us
 
 ## Installation
 
-1. Download the TIC.pak.zip file from the [latest release](https://github.com/amayer5125/nextui-tic-80-pak/releases) on GitHub.
-1. Extract the zip file onto your SD card in the `/Emus/tg5040` directory. You should see a new TIC.pak directory after extracting.
+1. Download the TIC.pakz file from the [latest release](https://github.com/amayer5125/nextui-tic-80-pak/releases) on GitHub.
+1. Extract the zip file to the root of your SD card. You should see a new TIC.pak directory under `/Emus/<platform>` after extracting.
 1. Create the `/Roms/TIC-80 (TIC)` directory on your SD card for your games.
 
 You can download most games for free from the [TIC-80 website](https://tic80.com/play) or the [itch.io website](https://itch.io/games/made-with-tic-80). Place the .tic files in the `/Roms/TIC-80 (TIC)` directory.
@@ -33,4 +33,4 @@ The following languages **are not** compiled into the Libretro core. They may be
 
 ## Debug Logs
 
-If you are having trouble launching games you can look for clues in the debug logs at `/.userdata/tg5040/logs/TIC.log`.
+If you are having trouble launching games you can look for clues in the debug logs at `/.userdata/<platform>/logs/TIC.txt`.
